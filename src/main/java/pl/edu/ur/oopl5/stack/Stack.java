@@ -1,49 +1,49 @@
 package pl.edu.ur.oopl5.stack;
 
+import java.util.EmptyStackException;
+
 /**
  */
 public class Stack extends AbstractStack {
-    int n;
-    int[] stos=new int[n];
-    int index;
 
-    int i;
+    private int[] s;
+    private int l = 0;
+    private int index = -1;
 
     public Stack(int i) {
-        stos = new int[i];
-        index = 0;
+        this.s = new int[i];
     }
 
     @Override
-    public void push(int i) throws ArrayIndexOutOfBoundsException {
-        if (index < stos.length) {
-            stos[index] = i;
+    public void push(int i) {
+        if ((s.length - 1) > index) {
             index++;
+            l++;
+            s[index] = i;
         } else {
-            throw new ArrayIndexOutOfBoundsException("Stos jest pe³ny!");
+            throw new StackOverflowError();
         }
-
     }
 
     @Override
-    public int pop() throws IndexOutOfBoundsException {
-        if (index <= 0) {
-            throw new IndexOutOfBoundsException("Stos jest pusty!");
+    public int pop() {
+        if (!isEmpty()) {
+            int i = s[index];
+            index--;
+            l--;
+            return i;
+        } else {
+            throw new EmptyStackException();
         }
-
-        int temp = stos[index - 1];
-        index--;
-        return temp;
     }
 
     @Override
     public boolean isEmpty() {
-        if (index == 0) {
+        if (index == -1) {
             return true;
         } else {
             return false;
         }
-
     }
 
 }
